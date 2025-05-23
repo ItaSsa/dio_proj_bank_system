@@ -30,10 +30,9 @@ def do_deposit(dep_amout):
     balance +=  dep_amount
 
     global statement
-    statement += f""" \nDeposit of: $ {dep_amount}. 
-                      New balance: {balance} """ 
+    statement += f"""{"-"*70} \nDeposit of: $ {dep_amount}.\n  New balance: {balance}\n""" 
     
-    print(f"Deposit of /$ { dep_amount } succesfully done! ")
+    print(f"Deposit of $ { dep_amount } succesfully done! ")
 
 
 """Fuction that implements withdraw operation under following rules:
@@ -58,14 +57,16 @@ def do_withdraw(with_amount):
         print(f" Amount for withdraw ${daily_limit} is major then the account balance ${balance}!")
         exit   
     
-    balance += with_amount
+    balance -= with_amount
     withdraw_counting += 1
-    statement += f""" \nWithdraw of: $ {with_amount}. 
-                New balance: {balance} """    
+    statement += f"""{"-"*70} \nWithdraw of: $ {with_amount}. \n  New balance: {balance}\n """
 
 def check_statememt():
     global statement
     print("Here the statment of your account: ")
+    print(f"Actual balance: ${balance} ")
+    print("-"*70)
+    print(f"History: ")
     print(statement)
 
 while True:
@@ -80,7 +81,7 @@ while True:
     elif option == "w":
         message_withdraw = "Please inform the amount for withdraw: "
         with_amount = float(input(message_withdraw))
-        do_deposit(with_amount)
+        do_withdraw(with_amount)
 
 
     elif option == "s":
@@ -88,7 +89,7 @@ while True:
         
     elif option == "q":
         print("Bye!")
-        exit
-        
+        break
+
     else:
         print(" Please choose one option from the menu ;]")

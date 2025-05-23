@@ -9,13 +9,13 @@ Why? Shortly, because it is a modern approch for Python projects and :
  - By using poetry the dependency management and packaging is smooth and organized in a .toml file.
 
 
-![alt text](image.png)
+![alt text](images/image.png)
 
 Second, we decide backing  my old habit of make a functional diagram for better understanding of the problem. In this case I choose a context diagram, to remember my begining in the IT world... ☺️
 
-![alt text](image-1.png)
+![alt text](images/image-1.png)
 
-The above diagram shows we will create 3 options for our costumer:
+The above diagram shows we will create 3 options for our customer:
     - Request withdraw;
     - Make a deposit;
     - View statment.

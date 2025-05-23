@@ -8,9 +8,8 @@ menu = """
     [s] Check statement
     [q] Quit
 """
-balance = 0.0
+balance = 0
 daily_limit = 500
-
 statement = ""
 withdraw_counting = 0
 COUNT_WITHDRAW_DAY = 3
@@ -22,12 +21,15 @@ COUNT_WITHDRAW_DAY = 3
     - All deposits should be stored in one variable and view in the 
     view statement operation.
 """
-def do_deposit(_dep_amout):
-    if dep_amount <= 0:
-        print("The amout to deposit should be positive!")
+def do_deposit(dep_amout):
+    if dep_amount <= 0.0:
+        print("The amount to deposit should be positive!")
         print("Operation not conclude!")
         exit
-    balance += dep_amount
+    global balance 
+    balance +=  dep_amount
+
+    global statement
     statement += f""" \nDeposit of: $ {dep_amount}. 
                       New balance: {balance} """ 
     
@@ -41,25 +43,28 @@ def do_deposit(_dep_amout):
 
     - If there is no balance the system abort the withdraw operation and send a message.
 """
-def do_withdraw(_with_amount):
+def do_withdraw(with_amount):
+    global balance,withdraw_counting,statement
+
     if withdraw_counting >= 3:
         print("Daily count for withdraw reached")
         exit
   
-    if _with_amount >= daily_limit:
+    if with_amount >= daily_limit:
         print(f"Only withdraw until ${daily_limit} are permited!")
         exit
     
-    if balance < _with_amount:
+    if balance < with_amount:
         print(f" Amount for withdraw ${daily_limit} is major then the account balance ${balance}!")
         exit   
     
-    balance += _with_amount
+    balance += with_amount
     withdraw_counting += 1
-    statement += f""" \nWithdraw of: $ {_with_amount}. 
+    statement += f""" \nWithdraw of: $ {with_amount}. 
                 New balance: {balance} """    
 
 def check_statememt():
+    global statement
     print("Here the statment of your account: ")
     print(statement)
 
@@ -69,19 +74,21 @@ while True:
 
     if option == "d":
         message_deposit = "Please inform the amount for deposit: "
-        dep_amount = input(message_deposit)
+        dep_amount = float(input(message_deposit))
         do_deposit(dep_amount)
     
     elif option == "w":
         message_withdraw = "Please inform the amount for withdraw: "
-        with_amount = input(message_withdraw)
+        with_amount = float(input(message_withdraw))
         do_deposit(with_amount)
-        
+
 
     elif option == "s":
         check_statememt()
         
     elif option == "q":
         print("Bye!")
+        exit
+        
     else:
         print(" Please choose one option from the menu ;]")

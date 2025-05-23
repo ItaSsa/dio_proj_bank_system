@@ -21,7 +21,8 @@ The above diagram shows we will create 3 options for our costumer:
     - View statment.
 You can check the business rules in the diagram as well. 
 
-This project will be improved in each version, each one well organized in separated directories. In each directory you will find instructions to run it.
+This project will be improved in each version, each one well organized in separated directories. In each directory you will find instructions to run it. 
+
 
 ## Author:
 Itaira Santos 

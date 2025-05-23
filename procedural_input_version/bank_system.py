@@ -25,7 +25,8 @@ def do_deposit(dep_amout):
     if dep_amount <= 0.0:
         print("The amount to deposit should be positive!")
         print("Operation not conclude!")
-        exit
+        return
+
     global balance 
     balance +=  dep_amount
 
@@ -47,15 +48,15 @@ def do_withdraw(with_amount):
 
     if withdraw_counting >= 3:
         print("Daily count for withdraw reached")
-        exit
+        return
   
     if with_amount >= daily_limit:
         print(f"Only withdraw until ${daily_limit} are permited!")
-        exit
+        return
     
     if balance < with_amount:
         print(f" Amount for withdraw ${daily_limit} is major then the account balance ${balance}!")
-        exit   
+        return  
     
     balance -= with_amount
     withdraw_counting += 1

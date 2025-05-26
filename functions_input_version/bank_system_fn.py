@@ -81,18 +81,21 @@ def do_withdraw(balance=0, statement="", value=0, daily_limit=0,
     return balance, statement, withdraw_counting
 
 
-def check_statememt():
+def view_statememt(balance, statement =""):
     """
     Function view_statement
-
-    @args: positional: balance , keyword: statement
     """
-    global statement
+
+    print("-"*70)
     print("Here the statment of your account: ")
+    print("-"*70)
+    print("-"*70)
     print(f"Actual balance: ${balance} ")
     print("-"*70)
+    print("-"*70)
     print(f"History: ")
-    print(statement)
+    return balance,statement
+
 
 while True:
 
@@ -115,10 +118,13 @@ while True:
 
 
     elif option == "s":
-        check_statememt()
+        balance,statement = view_statememt(balance,statement = statement)
+
+        print(statement)
         
     elif option == "q":
         print("Bye!")
+        
         break
 
     else:

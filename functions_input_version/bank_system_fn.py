@@ -5,7 +5,9 @@ menu = """
     
     [d] Deposit
     [w] Withdraw
-    [s] Check statement
+    [s] View statement
+    [u] Create Users
+    [l] List users
     [q] Quit
 """
 balance = 0
@@ -14,15 +16,34 @@ statement = ""
 withdraw_counting = 0
 TOTAL_WITHDRAW_DAY = 3
 users = []
+accounts = []
 
-def create_user():
-    pass
+def create_user(users,*,name, birth_date, id, adress):
+    if any(user["id"] == id for user in users):
+        raise ValueError(" Already have a user with this ID.")
+        return users
+    
+    user = {
+        "name": name,
+        "birth_date": birth_date,
+        "id": id,
+        "adress":adress
+    }
+    
+    users.append(user)
+     
+    return users
 
 def create_check_account():
     pass
 
-def list_users():
-    pass
+def list_users(users):
+    print("Users: ")
+    
+    for user in users:
+        for k,v in user.items():
+            print(f"{k} : { v }")
+    
 
 def list_acounts():
     pass
@@ -50,8 +71,8 @@ def do_deposit( balance, value , statement ):
     return balance, statement
 
 
-def do_withdraw(balance=0, statement="", value=0, daily_limit=0,
-                total_withdraw=0, withdraw_counting=0):
+def do_withdraw(*,balance, statement, value, daily_limit,
+                total_withdraw, withdraw_counting):
     """Fuction that implements withdraw operation under following rules:
         -  Only 3 withdraws per day.
 
@@ -81,7 +102,7 @@ def do_withdraw(balance=0, statement="", value=0, daily_limit=0,
     return balance, statement, withdraw_counting
 
 
-def view_statememt(balance, statement =""):
+def view_statememt(balance,*, statement):
     """
     Function view_statement
     """
@@ -121,10 +142,22 @@ while True:
         balance,statement = view_statememt(balance,statement = statement)
 
         print(statement)
+    
+    elif option == 'u':
+        var_input = input("Inform name, birth_date, id and adress (separated by commas): ")
+
+        i_name, i_birth_date, i_id, id_adress = var_input.split(",")
+
+        users = create_user(users,name = i_name, birth_date = i_birth_date, id = i_id, adress = id_adress)
         
+        print("User included succesfully!")
+
+    elif option == 'l':
+        list_users(users)
+
     elif option == "q":
         print("Bye!")
-        
+
         break
 
     else:

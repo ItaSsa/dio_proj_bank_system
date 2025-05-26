@@ -8,6 +8,8 @@ menu = """
     [s] View statement
     [u] Create Users
     [l] List users
+    [ca] Create check account
+    [la] Create check account
     [q] Quit
 """
 balance = 0
@@ -34,8 +36,22 @@ def create_user(users,*,name, birth_date, id, adress):
      
     return users
 
-def create_check_account():
-    pass
+def create_check_account(accounts,*, user_id ,brand="0001"):
+    account_number = 1
+
+    if accounts:
+        max_account_number = max(account["account_number"] for account in accounts)
+        account_number = max_account_number + 1 
+
+    account = {
+        "brand": brand,
+        "user_id": user_id,
+        "account_number": account_number
+    }
+
+    accounts.append(account)
+
+    return accounts
 
 def list_users(users):
     print("Users: ")
@@ -45,8 +61,12 @@ def list_users(users):
             print(f"{k} : { v }")
     
 
-def list_acounts():
-    pass
+def list_acounts(accounts):
+    print("Accounts: ")
+    
+    for account in accounts:
+        for k,v in account.items():
+            print(f"{k} : { v }")
 
 def do_deposit( balance, value , statement ):
     """
@@ -54,7 +74,6 @@ def do_deposit( balance, value , statement ):
         - Only possible to withdraw positive amounts.
         - All deposits should be stored in one variable and view in the 
         view statement operation.
-
     """
 
     if value <= 0.0:
@@ -154,6 +173,16 @@ while True:
 
     elif option == 'l':
         list_users(users)
+    
+    elif option == 'ca':
+        user_id = input("Inform user id : ")
+
+        accounts = create_check_account(accounts,user_id=user_id)
+
+        print("Check account included succesfully!")
+
+    elif option == 'la':
+        list_acounts(accounts)
 
     elif option == "q":
         print("Bye!")

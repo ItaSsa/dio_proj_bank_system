@@ -12,7 +12,7 @@ balance = 0
 daily_limit = 500
 statement = ""
 withdraw_counting = 0
-COUNT_WITHDRAW_DAY = 3
+TOTAL_WITHDRAW_DAY = 3
 users = []
 
 def create_user():
@@ -39,7 +39,7 @@ def do_deposit( balance, value , statement ):
     if value <= 0.0:
         print("The amount to deposit should be positive!")
         print("Operation not conclude!")
-        return
+        return balance, statement 
 
     balance +=  value
 
@@ -50,40 +50,43 @@ def do_deposit( balance, value , statement ):
     return balance, statement
 
 
-"""Fuction that implements withdraw operation under following rules:
-    -  Only 3 withdraws per day.
+def do_withdraw(balance=0, statement="", value=0, daily_limit=0,
+                total_withdraw=0, withdraw_counting=0):
+    """Fuction that implements withdraw operation under following rules:
+        -  Only 3 withdraws per day.
 
-    - Withdraw daily limit $500.
+        - Withdraw daily limit $500.
 
-    - If there is no balance the system abort the withdraw operation and send a message.
-"""
-def do_withdraw(with_amount):
-    #args keyword only balance,statment, value,limit,num_withdraw,limit_withdraw
-    # return balance, statment
-    global balance,withdraw_counting,statement
+        - If there is no balance the system abort the withdraw operation and send a message.
+    """
 
-    if withdraw_counting >= 3:
+    if withdraw_counting >= total_withdraw:
         print("Daily count for withdraw reached")
-        return
+        return balance, statement, withdraw_counting
   
-    if with_amount >= daily_limit:
+    if value >= daily_limit:
         print(f"Only withdraw until ${daily_limit} are permited!")
-        return
+        return balance, statement, withdraw_counting
     
-    if balance < with_amount:
+    if balance < value:
         print(f" Amount for withdraw ${daily_limit} is major then the account balance ${balance}!")
-        return  
+        return balance, statement, withdraw_counting 
     
-    balance -= with_amount
-    withdraw_counting += 1
-    statement += f"""{"-"*70} \nWithdraw of: $ {with_amount}. \n  New balance: {balance}\n """
+    balance -= value
 
-"""
+    withdraw_counting += 1
+    
+    statement += f"""{"-"*70} \nWithdraw of: $ {value}. \n  New balance: {balance}\n """
+
+    return balance, statement, withdraw_counting
+
+
+def check_statememt():
+    """
     Function view_statement
 
     @args: positional: balance , keyword: statement
-"""
-def check_statememt():
+    """
     global statement
     print("Here the statment of your account: ")
     print(f"Actual balance: ${balance} ")
@@ -97,13 +100,18 @@ while True:
 
     if option == "d":
         message_deposit = "Please inform the amount for deposit: "
+
         value = float(input(message_deposit))
+        
         balance,statement = do_deposit( balance, value , statement )
     
     elif option == "w":
         message_withdraw = "Please inform the amount for withdraw: "
-        with_amount = float(input(message_withdraw))
-        do_withdraw(with_amount)
+        
+        value = float(input(message_withdraw))
+        
+        balance, statement, withdraw_counting = do_withdraw(balance=balance, statement=statement, value=value, daily_limit=daily_limit,
+                total_withdraw=TOTAL_WITHDRAW_DAY, withdraw_counting=withdraw_counting)
 
 
     elif option == "s":
